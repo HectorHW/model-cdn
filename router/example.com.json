@@ -1,0 +1,30 @@
+{
+    "targeting": "country continent @ regiongroup region ip asn",
+    "data": {
+
+        "cdn-us": {
+            "a": [
+                [
+                    "172.25.0.12",
+                    10
+                ]
+            ]
+        },
+        "cdn-eu": {
+            "a": [
+                [
+                    "172.25.0.11",
+                    10
+                ]
+            ]
+        },
+        
+        "cdn.[172.25.0.13]": {
+            "alias" : "cdn-eu"
+        },
+        
+        "cdn.[172.25.0.14]": {
+            "alias" : "cdn-us"
+        }
+    }
+}

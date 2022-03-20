@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  router:
+    build: ./router
+    container_name: router
+    restart: unless-stopped
+    depends_on:
+      - eu_server
+      - us_server
+    networks:
+      default:
+        ipv4_address: 172.25.0.10
+        aliases:
+          - example.com
+
+  eu_server:
+    build: ./pop
+    container_name: eu
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: 172.25.0.11
+
+
+  us_server:
+    build: ./pop
+    container_name: us
+    restart: unless-stopped
+    networks:
+      default:
+        ipv4_address: 172.25.0.12
+  
+  client_eu:
+    build: ./client
+    depends_on:
+      - router
+    networks:
+      default:
+        ipv4_address: 172.25.0.13
+    dns: 172.25.0.10
+  
+  
+  client_us:
+    build: ./client
+    depends_on:
+      - router
+    networks:
+      default:
+        ipv4_address: 172.25.0.14
+    dns: 172.25.0.10
+
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.25.0.0/24
+          gateway: 172.25.0.1
